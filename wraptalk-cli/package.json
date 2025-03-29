@@ -2,7 +2,8 @@
   "name": "wraptalk",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/bin/wraptalk.cjs",  
+  "type": "module",
+  "main": "dist/bin/wraptalk.cjs",
   "module": "dist/bin/wraptalk.mjs",
   "bin": {
     "wraptalk": "dist/bin/wraptalk.cjs"
@@ -15,23 +16,22 @@
     "build": "rollup -c"
   },
   "devDependencies": {
-
-  "@rollup/plugin-commonjs": "^28.0.3",
-  "@rollup/plugin-json": "^6.1.0",
-  "@rollup/plugin-node-resolve": "^16.0.1",
-  "@rollup/plugin-typescript": "^12.1.2",
-  "@types/babel__traverse": "^7.20.7",
-  "@types/commander": "^2.12.5",
-  "@types/glob": "^8.1.0",
-  "@types/node": "^22.13.14",
-  "rollup": "^4.37.0"
-},
-"dependencies": {
-  "@babel/parser": "^7.27.0",
-  "@babel/traverse": "^7.27.0",
-  "commander": "^13.1.0",
-  "glob": "^11.0.1"
-},
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/babel__traverse": "^7.20.7",
+    "@types/commander": "^2.12.5",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^22.13.14",
+    "rollup": "^4.37.0"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.27.0",
+    "@babel/traverse": "^7.27.0",
+    "commander": "^13.1.0",
+    "glob": "^11.0.1"
+  },
   "author": "",
   "license": "ISC"
 }
