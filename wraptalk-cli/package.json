@@ -5,6 +5,12 @@
   "type": "module",
   "main": "dist/bin/wraptalk.cjs",
   "module": "dist/bin/wraptalk.mjs",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "wraptalk": "dist/bin/wraptalk.cjs"
   },

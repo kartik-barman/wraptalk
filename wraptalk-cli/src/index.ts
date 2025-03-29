@@ -10,6 +10,10 @@ program.command("init")
   .description("Initialize the wraptalk in the current directory")
   .action(initCommand);
 
+  program.command("run")
+  .description("Run the wraptalk in the current directory")
+  .action(runCommand);
+
 
   if (process.argv.length < 3) {
     program.outputHelp();
