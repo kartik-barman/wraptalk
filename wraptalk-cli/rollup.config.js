@@ -7,7 +7,7 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            file: "dist/bin/tme.cjs",
+            file: "dist/bin/wraptalk.cjs",
             format: "cjs",
             banner: "#!/usr/bin/env node",
         },
@@ -17,7 +17,7 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            file: "dist/bin/tme.mjs",
+            file: "dist/bin/wraptalk.mjs",
             format: "esm",
             banner: "#!/usr/bin/env node",
         },

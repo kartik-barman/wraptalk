@@ -2,15 +2,14 @@
   "name": "wraptalk",
   "version": "0.0.1",
   "description": "",
-  "type": "module",
-  "main": "dist/bin/tme.cjs",  
-  "module": "dist/bin/tme.mjs",
+  "main": "dist/bin/wraptalk.cjs",  
+  "module": "dist/bin/wraptalk.mjs",
   "bin": {
-    "tmejs": "dist/bin/tme.cjs"
+    "wraptalk": "dist/bin/wraptalk.cjs"
   },
   "exports": {
-    "import": "./dist/bin/tme.mjs",
-    "require": "./dist/bin/tme.cjs"
+    "import": "./dist/bin/wraptalk.mjs",
+    "require": "./dist/bin/wraptalk.cjs"
   },
   "scripts": {
     "build": "rollup -c"
