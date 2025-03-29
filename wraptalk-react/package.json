@@ -1,17 +1,18 @@
 {
-  "name": "wraptalk-react",
+  "name": "@wraptalk/wraptalk-react",
   "version": "0.0.1",
-  "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs"
   },
-
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
@@ -30,5 +31,6 @@
     "react-dom": "^19.0.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }
