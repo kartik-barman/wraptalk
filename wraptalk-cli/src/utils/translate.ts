@@ -8,7 +8,7 @@ const CONFIG_FILE = path.join("./", "wraptalk.config.json");
 const translateText = async (text: string, to: string) => {
     try {
         console.log(`Translating "${text}" to "${to}"...`);
-        const response = await axios.post("https://translate-backend-5l18.onrender.com/translate/?key=test", {
+        const response = await axios.post("https://wraptalk.onrender.com/translate/", {
             text,
             to
         });
