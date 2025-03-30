@@ -36,7 +36,8 @@ export default function AboutTeam() {
     },
     {
       name: "Sushanta Ruidas",
-      role: "Sushanta Ruidas is a passionate frontend developer, dedicated to crafting engaging and user-friendly web experiences with creativity and precision",
+      role: "Backend Developer",
+      bio: "Sushanta Ruidas is a passionate frontend developer, dedicated to crafting engaging and user-friendly web experiences with creativity and precision",
       image: "https://media.licdn.com/dms/image/v2/D4E03AQHLFceTKA2wuA/profile-displayphoto-shrink_200_200/B4EZXcXd0KHMAY-/0/1743158904646?e=1749081600&v=beta&t=oNypSrTX1WaKTBYmGmCiMsaVRgX36afdLKa4kIt7dXM",
       social: {
         github: "https://github.com/SushantaaCSE",

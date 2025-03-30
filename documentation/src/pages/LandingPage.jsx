@@ -24,10 +24,11 @@ export default function LandingPage() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition duration-200 transform hover:translate-y-px flex items-center justify-center gap-2 w-full sm:w-auto">
+          
+          <a href="https://github.com/wraptalk/wraptalk" target="_blank" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition duration-200 transform hover:translate-y-px flex items-center justify-center gap-2 w-full sm:w-auto cursor-pointer">
             <GitBranch className="w-5 h-5" />
             View on GitHub
-          </button>
+          </a>
 
           <button
             onClick={() => navigate("/getstarted")}
