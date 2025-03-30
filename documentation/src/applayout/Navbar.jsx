@@ -24,10 +24,10 @@ export default function Navbar() {
           About Our Team
         </Link>
         {/* <Link
-          to="#contact"
+          to="demo"
           className="text-gray-900 dark:text-gray-300 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
         >
-          Contact Us
+          Project Demo
         </Link> */}
       </div>
       <ToggleThemeButton />

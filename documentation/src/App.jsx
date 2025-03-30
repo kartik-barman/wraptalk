@@ -12,6 +12,7 @@ import GetStarted from "./pages/GetStarted.jsx";
 import HowItWorks from "./pages/HowItWorks.jsx";
 import AboutProject from "./pages/AboutProject.jsx";
 import AboutTeam from "./pages/AboutTeam.jsx";
+import WrapTalkHackathon from "./components/wrapTalkHachathon.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
       <Route path="how-it-works" element={<HowItWorks />} />
       <Route path="about-project" element={<AboutProject />} />
       <Route path="about-team" element={<AboutTeam />} />
+      {/* <Route path="demo" element={<WrapTalkHackathon />} /> */}
     </Route>
   )
 );
