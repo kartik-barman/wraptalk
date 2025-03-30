@@ -4177,14 +4177,10 @@ function detectProjectType() {
 function initCommand() {
     console.log("Installing wraptalk-reactjs...");
     try {
-<<<<<<< HEAD
-        execSync("npm install wraptalk-reactjs@latest", { stdio: "inherit" });
-=======
         execSync("npm install wraptalk-reactjs", { stdio: "inherit" });
->>>>>>> 8665e3093916e72197b8d28495d8405be67af01e
     }
     catch (error) {
-        console.error("Failed to install wraptalk-reactjs.");
+        console.error("Failed to install wraptalk-react.");
         console.error(error);
         process.exit(1);
     }
@@ -77193,7 +77189,7 @@ const CONFIG_FILE = path$2.join("./", "wraptalk.config.json");
 const translateText = (text, to) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Translating "${text}" to "${to}"...`);
-        const response = yield axios.post("https://translate-backend-5l18.onrender.com/translate/?key=test", {
+        const response = yield axios.post("https://wraptalk.onrender.com/translate/", {
             text,
             to
         });
