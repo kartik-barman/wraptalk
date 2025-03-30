@@ -77208,18 +77208,18 @@ const TRANSLATION_FILE = path$2.join("./src", "wraptalk.translations.json");
 const CONFIG_FILE = path$2.join("./", "wraptalk.config.json");
 const translateText = (text, to) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(`🔄 Translating "${text}" to "${to}"...`);
+        console.log(`Translating "${text}" to "${to}"...`);
         const response = yield axios.post("https://translate-backend-5l18.onrender.com/translate/?key=test", {
             text,
             to
         });
         if (!response.data || !response.data.data)
-            throw new Error("Invalid API response");
-        console.log(`✅ Translation successful: "${text}" → "${response.data.data}"`);
+            throw new Error("Invalid AI response");
+        console.log(`Translation successful: "${text}" → "${response.data.data}"`);
         return response.data.data;
     }
     catch (error) {
-        console.error(`❌ Failed to translate "${text}" to "${to}":`, error.message);
+        console.error(`Failed to translate "${text}" to "${to}":`, error.message);
         return text;
     }
 });
@@ -77227,19 +77227,18 @@ const translateCommand = (arg) => __awaiter(void 0, void 0, void 0, function* ()
     const forceRewrite = arg === "-a";
     console.log(`🚀 Translation started! Mode: ${forceRewrite ? "FULL REWRITE (-a)" : "MISSING ONLY"}`);
     try {
-        // Read and parse configuration file
         let config;
         try {
             const configData = yield fs$1.readFile(CONFIG_FILE, "utf-8");
             config = JSON.parse(configData);
         }
         catch (error) {
-            console.error("❌ Config file is missing or invalid. Please create 'wraptalk.config.json'.");
+            console.error("Config file is missing or invalid. Please create 'wraptalk.config.json'.");
             return;
         }
         const targetLanguages = config.languages || [];
         if (targetLanguages.length === 0) {
-            console.error("❌ No target languages defined in config.");
+            console.error("No target languages defined in config. Please define them in 'wraptalk.config.json'.");
             return;
         }
         // Read and parse translation file
@@ -77253,7 +77252,7 @@ const translateCommand = (arg) => __awaiter(void 0, void 0, void 0, function* ()
             translations = { english: {} };
         }
         if (!translations.english) {
-            console.error("❌ 'english' section not found in translations file.");
+            console.error("'english' section not found in translations file.");
             return;
         }
         let fileUpdated = false;
@@ -77264,7 +77263,7 @@ const translateCommand = (arg) => __awaiter(void 0, void 0, void 0, function* ()
             const translationPromises = Object.entries(translations.english)
                 .filter(([key]) => forceRewrite || !translations[lang][key])
                 .map((_a) => __awaiter(void 0, [_a], void 0, function* ([key, originalText]) {
-                console.log(`🆕 Translating "${key}" for "${lang}"...`);
+                // console.log(`🆕 Translating "${key}" for "${lang}"...`);
                 translations[lang][key] = yield translateText(originalText, lang);
                 updatesMade = true;
             }));
@@ -77273,16 +77272,16 @@ const translateCommand = (arg) => __awaiter(void 0, void 0, void 0, function* ()
                 fileUpdated = true;
         }
         if (fileUpdated) {
-            console.log("💾 Writing updated translations to file...");
+            // console.log("💾 Writing updated translations to file...");
             yield fs$1.writeFile(TRANSLATION_FILE, JSON.stringify(translations, null, 2));
-            console.log("✅ Translations updated successfully!");
+            console.log("Translations updated successfully!");
         }
         else {
             console.log("👍 No changes needed.");
         }
     }
     catch (error) {
-        console.error(`❌ Unexpected Error: ${error.message}`);
+        console.error(`Unexpected Error: ${error.message}`);
     }
 });
 
