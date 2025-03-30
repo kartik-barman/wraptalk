@@ -21,7 +21,7 @@ const router = createBrowserRouter(
       <Route path="how-it-works" element={<HowItWorks />} />
       <Route path="about-project" element={<AboutProject />} />
       <Route path="about-team" element={<AboutTeam />} />
-      <Route path="demo" element={<WrapTalkHackathon />} />
+      {/* <Route path="demo" element={<WrapTalkHackathon />} /> */}
     </Route>
   )
 );
