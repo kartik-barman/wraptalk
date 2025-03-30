@@ -1,9 +1,11 @@
 import { GitBranch, LeafyGreen, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import WrapTalkFAQ from "../components/FAQ/WrapTalkFAQ";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   return (
+    <>
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white flex items-center justify-center">
       {/* Hero Section */}
       <main className="px-6 py-16 text-center">
@@ -45,5 +47,7 @@ export default function LandingPage() {
         </div>
       </main>
     </div>
+    <WrapTalkFAQ />
+    </>
   );
 }
