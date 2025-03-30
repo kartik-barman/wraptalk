@@ -14,6 +14,7 @@ import Stream from 'node:stream';
 import { StringDecoder } from 'node:string_decoder';
 import require$$0$3 from 'tty';
 import require$$1$1, { TextEncoder as TextEncoder$1 } from 'util';
+import fs$1 from 'fs/promises';
 import stream$1, { Readable } from 'stream';
 import require$$3$1 from 'http';
 import require$$4$1 from 'https';
@@ -4174,18 +4175,18 @@ function detectProjectType() {
     return hasTsConfig ? ["ts", "tsx"] : ["js", "jsx"];
 }
 function initCommand() {
-    console.log("🚀 Installing wraptalk-react...");
+    console.log("Installing wraptalk-react...");
     try {
-        execSync("npm install wraptalk-react", { stdio: "inherit" });
+        execSync("npm install wraptalk-react@latest", { stdio: "inherit" });
     }
     catch (error) {
-        console.error("❌ Failed to install wraptalk-react.");
+        console.error("Failed to install wraptalk-react.");
         console.error(error);
         process.exit(1);
     }
     const srcPath = path$2.join(process.cwd(), "src");
     if (!fs.existsSync(srcPath)) {
-        console.error("❌ src directory not found.");
+        console.error("src directory not found.");
         console.error("Please create a 'src' directory and re-run the command.");
         process.exit(1);
     }
@@ -4195,7 +4196,7 @@ function initCommand() {
         fs.writeFileSync(translationsPath, JSON.stringify({}, null, 2), "utf-8");
         console.log("Created wraptalk.translations.json in 'src' folder");
         const configPath = path$2.join(process.cwd(), "wraptalk.config.json");
-        const configData = { fileExtensions: detectProjectType() };
+        const configData = { fileExtensions: detectProjectType(), languages: [], appLanguage: "english" };
         fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), "utf-8");
         console.log("Created wraptalk.config.json in the root folder");
         console.log("Initialization complete! You can now run `npx wraptalk run`.");
@@ -59281,9 +59282,6 @@ function requireLib () {
 var libExports = requireLib();
 var traverse = /*@__PURE__*/getDefaultExportFromCjs(libExports);
 
-/**
- * Reads file extensions from config or defaults to ["js", "jsx"].
- */
 function getFileExtensions() {
     const configPath = path$2.join(process.cwd(), "wraptalk.config.json");
     if (!fs.existsSync(configPath)) {
@@ -59299,9 +59297,6 @@ function getFileExtensions() {
         process.exit(1);
     }
 }
-/**
- * Extracts `tid` and text from `<TranslateThis>` components in a file.
- */
 function extractTranslations(filePath) {
     const code = fs.readFileSync(filePath, "utf-8");
     const ast = libExports$1.parse(code, {
@@ -59333,33 +59328,61 @@ function extractTranslations(filePath) {
     });
     return translations;
 }
-/**
- * Scans project files for translations and saves them in `wraptalk.translations.json`.
- */
-function scanCommand() {
+function scanCommand(arg) {
     const srcPath = path$2.join(process.cwd(), "src");
     if (!fs.existsSync(srcPath)) {
-        console.error("src directory not found.");
-        console.error("Please create a 'src' directory and run `npx wraptalk init` command.");
+        console.error("'src' directory not found. Please create it and run `npx wraptalk init`.");
         process.exit(1);
     }
     const fileExtensions = getFileExtensions();
     const searchPattern = `src/**/*.{${fileExtensions.join(",")}}`;
     const files = glob.sync(searchPattern);
-    if (files.length === 0) {
-        console.log("No matching files found to scan.");
+    if (files.length === 0)
         return;
-    }
-    let allTranslations = {};
-    for (const file of files) {
-        const translations = extractTranslations(file);
-        allTranslations = Object.assign(Object.assign({}, allTranslations), translations);
-    }
-    // Format translations under "english" key
-    const formattedTranslations = { english: allTranslations };
     const outputPath = path$2.join(srcPath, "wraptalk.translations.json");
-    fs.writeFileSync(outputPath, JSON.stringify(formattedTranslations, null, 2), "utf-8");
-    console.log(`Scan complete! Translations saved to ${outputPath}`);
+    let existingTranslations = {};
+    if (fs.existsSync(outputPath)) {
+        try {
+            existingTranslations = JSON.parse(fs.readFileSync(outputPath, "utf-8"));
+        }
+        catch (error) {
+            console.error("Error reading existing translations file:", error);
+            return;
+        }
+    }
+    const configPath = path$2.join(process.cwd(), "wraptalk.config.json");
+    let defaultLanguage = "english";
+    try {
+        const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+        if (config.appLanguage)
+            defaultLanguage = config.appLanguage;
+    }
+    catch (_a) {
+        console.warn("⚠️ appLanguage not defined. Using default ('english').");
+    }
+    let newTranslations = {};
+    for (const file of files) {
+        Object.assign(newTranslations, extractTranslations(file));
+    }
+    if (arg === "-a") {
+        fs.writeFileSync(outputPath, JSON.stringify({ [defaultLanguage]: newTranslations }, null, 2), "utf-8");
+        console.log("✔ Translations file rewritten successfully!");
+    }
+    else {
+        if (!existingTranslations[defaultLanguage])
+            existingTranslations[defaultLanguage] = {};
+        let newEntriesFound = false;
+        for (const tid in newTranslations) {
+            if (!(tid in existingTranslations[defaultLanguage])) {
+                existingTranslations[defaultLanguage][tid] = newTranslations[tid];
+                newEntriesFound = true;
+            }
+        }
+        if (newEntriesFound) {
+            fs.writeFileSync(outputPath, JSON.stringify(existingTranslations, null, 2), "utf-8");
+            console.log("✔ Translations file updated successfully!");
+        }
+    }
 }
 
 function bind(fn, thisArg) {
@@ -77165,82 +77188,117 @@ const TRANSLATION_FILE = path$2.join("./src", "wraptalk.translations.json");
 const CONFIG_FILE = path$2.join("./", "wraptalk.config.json");
 const translateText = (text, to) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(`Translating "${text}" to "${to}"...`);
         const response = yield axios.post("https://translate-backend-5l18.onrender.com/translate/?key=test", {
             text,
             to
         });
-        console.log(response.data);
+        if (!response.data || !response.data.data)
+            throw new Error("Invalid AI response");
+        console.log(`Translation successful: "${text}" → "${response.data.data}"`);
         return response.data.data;
     }
     catch (error) {
-        console.error(`❌ Translation failed for "${text}" to ${to}`);
+        console.error(`Failed to translate "${text}" to "${to}":`, error.message);
         return text;
     }
 });
-const translateCommand = () => __awaiter(void 0, void 0, void 0, function* () {
-    if (!fs.existsSync(CONFIG_FILE)) {
-        console.error("❌ Config file not found. Please create 'wraptalk.config.json'.");
-        return;
-    }
-    const config = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf-8"));
-    const targetLanguages = config.languages || [];
-    if (targetLanguages.length === 0) {
-        console.error("❌ No target languages defined in config.");
-        return;
-    }
-    if (!fs.existsSync(TRANSLATION_FILE)) {
-        console.error("❌ Translations file not found.");
-        return;
-    }
-    const translations = JSON.parse(fs.readFileSync(TRANSLATION_FILE, "utf-8"));
-    if (!translations.english) {
-        console.error("❌ 'english' section not found in translations file.");
-        return;
-    }
-    for (const lang of targetLanguages) {
-        console.log(`🔄 Translating all text to ${lang}...`);
-        for (const key in translations.english) {
-            const originalText = translations.english[key];
-            if (!translations[lang]) {
-                translations[lang] = {};
-            }
-            if (!translations[lang][key]) {
-                const translatedText = yield translateText(originalText, lang);
-                translations[lang][key] = translatedText;
-                console.log(`✅ Translated "${originalText}" to ${lang}: "${translatedText}"`);
-            }
+const translateCommand = (arg) => __awaiter(void 0, void 0, void 0, function* () {
+    const forceRewrite = arg === "-a";
+    console.log(`🚀 Translation started! Mode: ${forceRewrite ? "FULL REWRITE (-a)" : "MISSING ONLY"}`);
+    try {
+        let config;
+        try {
+            const configData = yield fs$1.readFile(CONFIG_FILE, "utf-8");
+            config = JSON.parse(configData);
+        }
+        catch (error) {
+            console.error("Config file is missing or invalid. Please create 'wraptalk.config.json'.");
+            return;
+        }
+        const targetLanguages = config.languages || [];
+        if (targetLanguages.length === 0) {
+            console.error("No target languages defined in config. Please define them in 'wraptalk.config.json'.");
+            return;
+        }
+        // Read and parse translation file
+        let translations = { english: {} };
+        try {
+            const fileContent = yield fs$1.readFile(TRANSLATION_FILE, "utf-8");
+            translations = fileContent.trim() ? JSON.parse(fileContent) : { english: {} };
+        }
+        catch (error) {
+            console.warn("⚠️ Translations file is missing or corrupted. Creating a new one.");
+            translations = { english: {} };
+        }
+        if (!translations.english) {
+            console.error("'english' section not found in translations file.");
+            return;
+        }
+        let fileUpdated = false;
+        for (const lang of targetLanguages) {
+            console.log(`🌍 Processing "${lang}" translations...`);
+            translations[lang] || (translations[lang] = {});
+            let updatesMade = false;
+            const translationPromises = Object.entries(translations.english)
+                .filter(([key]) => forceRewrite || !translations[lang][key])
+                .map((_a) => __awaiter(void 0, [_a], void 0, function* ([key, originalText]) {
+                // console.log(`🆕 Translating "${key}" for "${lang}"...`);
+                translations[lang][key] = yield translateText(originalText, lang);
+                updatesMade = true;
+            }));
+            yield Promise.all(translationPromises);
+            if (updatesMade)
+                fileUpdated = true;
+        }
+        if (fileUpdated) {
+            // console.log("💾 Writing updated translations to file...");
+            yield fs$1.writeFile(TRANSLATION_FILE, JSON.stringify(translations, null, 2));
+            console.log("Translations updated successfully!");
+        }
+        else {
+            console.log("👍 No changes needed.");
         }
     }
-    fs.writeFileSync(TRANSLATION_FILE, JSON.stringify(translations, null, 2));
-    console.log("✅ Translations updated successfully.");
+    catch (error) {
+        console.error(`Unexpected Error: ${error.message}`);
+    }
 });
 
-const runCommand = () => __awaiter(void 0, void 0, void 0, function* () {
+const runCommand = (arg) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("i am from the run command ", arg);
     try {
-        scanCommand();
-        console.log("✅ Translations extracted and saved to wraptalk.translations.json");
+        scanCommand(arg);
     }
     catch (error) {
-        console.error("❌ Error in scanCommand:", error);
+        console.error("Error in scanCommand:", error);
         return;
     }
     try {
-        yield translateCommand();
-        console.log("✅ Translations completed and updated in wraptalk.translations.json");
+        yield translateCommand(arg);
+        console.log("Command completed successfully.");
     }
     catch (error) {
-        console.error("❌ Error in translateCommand:", error);
+        console.error("Error in translateCommand:", error);
     }
 });
 
 const program = new Command();
-program.name("wraptalk").description("will write a better description later!").version("0.0.1");
-program.command("init")
+program
+    .name("wraptalk")
+    .description("will write a better description later!")
+    .version("0.0.1");
+program
+    .command("init")
     .description("Initialize the wraptalk in the current directory")
     .action(initCommand);
 program.command("run")
-    .description("Run the wraptalk in the current directory")
-    .action(runCommand);
+    .description("Run wraptalk in the current directory")
+    .option("-a, --all", "Replace all translations instead of adding missing ones")
+    .action((options) => {
+    const arg = options.all ? "-a" : "";
+    runCommand(arg.trim());
+});
 if (process.argv.length < 3) {
     program.outputHelp();
     process.exit(0);

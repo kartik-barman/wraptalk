@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 function Footer({ version = "1.0.0" }) {
   return (
@@ -6,29 +7,23 @@ function Footer({ version = "1.0.0" }) {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <span className="font-semibold">MyApp</span>
+            <span className="font-semibold">wraptalk</span>
             <span className="mx-2 text-gray-500 dark:text-gray-400">•</span>
             <span className="text-sm">v{version}</span>
           </div>
 
           <nav className="flex space-x-6">
-            <a
-              href="/docs"
+            <Link
+              to= "how-it-works"
               className="hover:text-blue-600 dark:hover:text-blue-300 transition duration-200"
             >
               Docs
-            </a>
+            </Link>
             <a
-              href="https://github.com/myapp"
+              href="https://github.com/wraptalk/wraptalk"
               className="hover:text-blue-600 dark:hover:text-blue-300 transition duration-200"
             >
               GitHub
-            </a>
-            <a
-              href="/support"
-              className="hover:text-blue-600 dark:hover:text-blue-300 transition duration-200"
-            >
-              Support
             </a>
           </nav>
         </div>
