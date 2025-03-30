@@ -1,6 +1,6 @@
 {
-  "name": "wraptalk-react",
-  "version": "0.0.1",
+  "name": "wraptalk-reactjs",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
