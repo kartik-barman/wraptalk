@@ -104,6 +104,4 @@ export function scanCommand() {
   const formattedTranslations = { english: allTranslations };
   const outputPath = path.join(srcPath, "wraptalk.translations.json");
   fs.writeFileSync(outputPath, JSON.stringify(formattedTranslations, null, 2), "utf-8");
-
-  console.log(`Scan complete! Translations saved to ${outputPath}`);
 }
