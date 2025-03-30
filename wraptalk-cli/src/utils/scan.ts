@@ -5,10 +5,6 @@ import * as parser from "@babel/parser";
 import traverse from "@babel/traverse";
 import { JSXAttribute, JSXIdentifier, JSXText } from "@babel/types";
 
-/**
- * Reads file extensions from config or defaults to ["js", "jsx"].
- */
-
 function getFileExtensions(): string[] {
   const configPath = path.join(process.cwd(), "wraptalk.config.json");
 
@@ -26,10 +22,6 @@ function getFileExtensions(): string[] {
   }
 }
 
-/**
- * Extracts `tid` and text from `<TranslateThis>` components in a file.
- */
-
 function extractTranslations(filePath: string): Record<string, string> {
   const code = fs.readFileSync(filePath, "utf-8");
   const ast = parser.parse(code, {
@@ -42,7 +34,6 @@ function extractTranslations(filePath: string): Record<string, string> {
   traverse(ast, {
     JSXElement(path) {
       const node = path.node;
-
       if (node.openingElement.name.type === "JSXIdentifier") {
         const componentName = (node.openingElement.name as JSXIdentifier).name;
 
@@ -53,7 +44,6 @@ function extractTranslations(filePath: string): Record<string, string> {
 
           if (tidAttribute && tidAttribute.value?.type === "StringLiteral") {
             const tid = tidAttribute.value.value;
-
             const text = node.children
               .filter((child) => child.type === "JSXText")
               .map((child) => (child as JSXText).value.trim())
@@ -71,16 +61,10 @@ function extractTranslations(filePath: string): Record<string, string> {
   return translations;
 }
 
-/**
- * Scans project files for translations and saves them in `wraptalk.translations.json`.
- */
-
-
-export function scanCommand() {
+export function scanCommand(arg: string) {
   const srcPath = path.join(process.cwd(), "src");
   if (!fs.existsSync(srcPath)) {
-    console.error("src directory not found.");
-    console.error("Please create a 'src' directory and run `npx wraptalk init` command.");
+    console.error("'src' directory not found. Please create it and run `npx wraptalk init`.");
     process.exit(1);
   }
 
@@ -88,20 +72,52 @@ export function scanCommand() {
   const searchPattern = `src/**/*.{${fileExtensions.join(",")}}`;
   const files = glob.sync(searchPattern);
 
-  if (files.length === 0) {
-    console.log("No matching files found to scan.");
-    return;
-  }
+  if (files.length === 0) return;
 
-  let allTranslations: Record<string, string> = {};
-
-  for (const file of files) {
-    const translations = extractTranslations(file);
-    allTranslations = { ...allTranslations, ...translations };
-  }
-
-  // Format translations under "english" key
-  const formattedTranslations = { english: allTranslations };
   const outputPath = path.join(srcPath, "wraptalk.translations.json");
-  fs.writeFileSync(outputPath, JSON.stringify(formattedTranslations, null, 2), "utf-8");
+  let existingTranslations: Record<string, any> = {};
+
+  if (fs.existsSync(outputPath)) {
+    try {
+      existingTranslations = JSON.parse(fs.readFileSync(outputPath, "utf-8"));
+    } catch (error) {
+      console.error("Error reading existing translations file:", error);
+      return;
+    }
+  }
+
+  const configPath = path.join(process.cwd(), "wraptalk.config.json");
+  let defaultLanguage = "english";
+
+  try {
+    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    if (config.appLanguage) defaultLanguage = config.appLanguage;
+  } catch {
+    console.warn("⚠️ appLanguage not defined. Using default ('english').");
+  }
+
+  let newTranslations: Record<string, string> = {};
+  for (const file of files) {
+    Object.assign(newTranslations, extractTranslations(file));
+  }
+
+  if (arg === "-a") {
+    fs.writeFileSync(outputPath, JSON.stringify({ [defaultLanguage]: newTranslations }, null, 2), "utf-8");
+    console.log("✔ Translations file rewritten successfully!");
+  } else {
+    if (!existingTranslations[defaultLanguage]) existingTranslations[defaultLanguage] = {};
+
+    let newEntriesFound = false;
+    for (const tid in newTranslations) {
+      if (!(tid in existingTranslations[defaultLanguage])) {
+        existingTranslations[defaultLanguage][tid] = newTranslations[tid];
+        newEntriesFound = true;
+      }
+    }
+
+    if (newEntriesFound) {
+      fs.writeFileSync(outputPath, JSON.stringify(existingTranslations, null, 2), "utf-8");
+      console.log("✔ Translations file updated successfully!");
+    }
+  }
 }

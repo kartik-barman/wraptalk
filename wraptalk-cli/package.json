@@ -1,6 +1,6 @@
 {
   "name": "wraptalk",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "",
   "type": "module",
   "main": "dist/bin/wraptalk.cjs",
