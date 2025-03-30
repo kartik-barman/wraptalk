@@ -1,13 +1,10 @@
 {
-  "name": "wraptalk",
-  "version": "0.1.1",
+  "name": "wraptalk-cli",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "main": "dist/bin/wraptalk.cjs",
   "module": "dist/bin/wraptalk.mjs",
-  "publishConfig": {
-    "access": "public"
-  },
   "files": [
     "dist"
   ],
