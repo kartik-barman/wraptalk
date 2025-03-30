@@ -4175,9 +4175,9 @@ function detectProjectType() {
     return hasTsConfig ? ["ts", "tsx"] : ["js", "jsx"];
 }
 function initCommand() {
-    console.log("Installing wraptalk-react...");
+    console.log("Installing wraptalk-reactjs...");
     try {
-        execSync("npm install wraptalk-react@latest", { stdio: "inherit" });
+        execSync("npm install wraptalk-reactjs", { stdio: "inherit" });
     }
     catch (error) {
         console.error("Failed to install wraptalk-react.");
