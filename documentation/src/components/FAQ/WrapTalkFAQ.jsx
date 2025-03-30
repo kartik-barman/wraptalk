@@ -46,7 +46,7 @@ const WrapTalkFAQ = () => {
     },
     {
       question: "How do I install WrapTalk?",
-      answer: "You can install WrapTalk globally using npm: 'npm install -g wraptalk'. Then initialize it in your project using 'npx wraptalk init'. This will set up the configuration and install the React components package."
+      answer: "You can install WrapTalk globally using npm: 'npm install -g wraptalk-cli'. Then initialize it in your project using 'npx wraptalk init'. This will set up the configuration and install the React components package."
     },
     {
       question: "How do I update translations when I change text?",

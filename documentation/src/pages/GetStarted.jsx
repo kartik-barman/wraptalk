@@ -77,7 +77,7 @@ const WrapTalkGetStarted = () => {
               number="1"
               title="Installation"
               description="Install WrapTalk globally using npm."
-              code="npm install -g wraptalk"
+              code="npm install -g wraptalk-cli"
             />
 
             <StepCard
