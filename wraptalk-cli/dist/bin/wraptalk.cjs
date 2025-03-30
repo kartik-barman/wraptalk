@@ -77189,11 +77189,12 @@ const translateText = (text, to) => __awaiter(void 0, void 0, void 0, function* 
             text,
             to
         });
-        return response.data.translation;
+        console.log(response.data);
+        return response.data.data;
     }
     catch (error) {
         console.error(`❌ Translation failed for "${text}" to ${to}`);
-        return text; // Return original text if translation fails
+        return text;
     }
 });
 const translateCommand = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -77216,16 +77217,17 @@ const translateCommand = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error("❌ 'english' section not found in translations file.");
         return;
     }
-    for (const key in translations.english) {
-        const originalText = translations.english[key];
-        for (const lang of targetLanguages) {
+    for (const lang of targetLanguages) {
+        console.log(`🔄 Translating all text to ${lang}...`);
+        for (const key in translations.english) {
+            const originalText = translations.english[key];
             if (!translations[lang]) {
                 translations[lang] = {};
             }
             if (!translations[lang][key]) {
                 const translatedText = yield translateText(originalText, lang);
                 translations[lang][key] = translatedText;
-                console.log(`🔄 Translated "${originalText}" to ${lang}: "${translatedText}"`);
+                console.log(`✅ Translated "${originalText}" to ${lang}: "${translatedText}"`);
             }
         }
     }
@@ -77234,10 +77236,21 @@ const translateCommand = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 
 const runCommand = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield scanCommand(); // Run scan first
-    console.log("✅ Translations extracted and saved to wraptalk.translations.json");
-    yield translateCommand();
-    console.log("✅ Translations completed and updated in wraptalk.translations.json");
+    try {
+        scanCommand();
+        console.log("✅ Translations extracted and saved to wraptalk.translations.json");
+    }
+    catch (error) {
+        console.error("❌ Error in scanCommand:", error);
+        return;
+    }
+    try {
+        yield translateCommand();
+        console.log("✅ Translations completed and updated in wraptalk.translations.json");
+    }
+    catch (error) {
+        console.error("❌ Error in translateCommand:", error);
+    }
 });
 
 const program = new Command();
