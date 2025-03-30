@@ -1,18 +1,21 @@
 import { scanCommand } from "../utils/scan";
 import { translateCommand } from "../utils/translate";
 
-export const runCommand = async () => {
+export const runCommand = async (arg: string) => {
+
+    console.log("i am from the run command ",arg);
+
     try {
-        scanCommand();
+        scanCommand(arg);
     } catch (error) {
-        console.error("❌ Error in scanCommand:", error);
+        console.error("Error in scanCommand:", error);
         return;
     }
 
     try {
-        await translateCommand();
-        console.log("✅ Translations completed and updated in wraptalk.translations.json");
+        await translateCommand(arg);
+        console.log("Command completed successfully.");
     } catch (error) {
-        console.error("❌ Error in runCommand:", error);
+        console.error("Error in translateCommand:", error);
     }
 };
