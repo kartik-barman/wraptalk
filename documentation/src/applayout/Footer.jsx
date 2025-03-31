@@ -29,7 +29,7 @@ function Footer({ version = "1.0.0" }) {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} MyApp. All rights reserved.
+          © {new Date().getFullYear()} Wraptalk. All rights reserved.
         </div>
       </div>
     </footer>

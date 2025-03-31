@@ -1,7 +1,6 @@
 import { GitBranch, LeafyGreen, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import WrapTalkFAQ from "../components/FAQ/WrapTalkFAQ";
-import WrapTalkHackathon from "../components/wrapTalkHachathon";
 
 export default function LandingPage() {
   const navigate = useNavigate();
