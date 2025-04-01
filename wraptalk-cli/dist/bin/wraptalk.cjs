@@ -4195,9 +4195,9 @@ function detectProjectType() {
     return hasTsConfig ? ["ts", "tsx"] : ["js", "jsx"];
 }
 function initCommand() {
-    console.log("Installing wraptalk-reactjs...");
+    console.log("Installing wraptalk-react...");
     try {
-        child_process.execSync("npm install wraptalk-reactjs", { stdio: "inherit" });
+        child_process.execSync("npm install wraptalk-react", { stdio: "inherit" });
     }
     catch (error) {
         console.error("Failed to install wraptalk-react.");
@@ -4210,7 +4210,7 @@ function initCommand() {
         console.error("Please create a 'src' directory and re-run the command.");
         process.exit(1);
     }
-    console.log("Found src directory. Creating config files...");
+    // console.log("Found src directory. Creating config files...");
     try {
         const translationsPath = path$2.join(srcPath, "wraptalk.translations.json");
         fs.writeFileSync(translationsPath, JSON.stringify({}, null, 2), "utf-8");
@@ -4219,7 +4219,7 @@ function initCommand() {
         const configData = { fileExtensions: detectProjectType(), languages: [], appLanguage: "english" };
         fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), "utf-8");
         console.log("Created wraptalk.config.json in the root folder");
-        console.log("Initialization complete! You can now run `npx wraptalk run`.");
+        console.log("Initialization complete!.");
     }
     catch (error) {
         console.error("Error creating configuration files:", error);

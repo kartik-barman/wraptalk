@@ -1,6 +1,6 @@
 {
-  "name": "wraptalk-cli",
-  "version": "1.0.2",
+  "name": "wraptalk",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "dist/bin/wraptalk.cjs",
