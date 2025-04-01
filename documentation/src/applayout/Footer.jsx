@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Footer({ version = "1.0.0" }) {
   return (
@@ -14,7 +14,7 @@ function Footer({ version = "1.0.0" }) {
 
           <nav className="flex space-x-6">
             <Link
-              to= "how-it-works"
+              to="how-it-works"
               className="hover:text-blue-600 dark:hover:text-blue-300 transition duration-200"
             >
               Docs
@@ -29,7 +29,8 @@ function Footer({ version = "1.0.0" }) {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} Wraptalk. All rights reserved.
+          © {new Date().getFullYear()} WrapTalk Documentation. All rights
+          reserved.
         </div>
       </div>
     </footer>

@@ -68,7 +68,7 @@ const WrapTalkDocs = () => {
                 {/* Component Package Card */}
                 <div className="bg-gradient-to-br from-pink-500 to-red-600 text-white rounded-lg shadow-lg p-6 border border-transparent">
                   <h3 className="text-xl font-semibold mb-4">
-                    wraptalk-reactjs (Component Package)
+                    wraptalk-react (Component Package)
                   </h3>
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Installed locally in your project.</li>
@@ -114,7 +114,7 @@ const WrapTalkDocs = () => {
                     and save translations.
                   </li>
                   <li>
-                    <strong>Runtime Usage:</strong> Use `wraptalk-reactjs`
+                    <strong>Runtime Usage:</strong> Use `wraptalk-react`
                     components to display and switch between languages
                     dynamically.
                   </li>
@@ -144,7 +144,7 @@ const WrapTalkDocs = () => {
                     </h4>
                   </div>
                   <div className="p-4 bg-gray-800 text-green-400 font-mono text-sm rounded overflow-x-auto whitespace-pre">
-                    {`$ npx wraptalk init\n\n✅ Creating wraptalk.config.json file\n✅ Installing wraptalk-reactjs package\n✅ Initialization complete\n\nYour WrapTalk project is ready! To generate translations:\n\n1. Wrap your text in <TranslateThis tid="unique_id"> components\n2. Run 'npx wraptalk run' to scan and translate\n3. Import the LanguageProvider in your App.js\n4. Use the useLanguage hook to switch languages`}
+                    {`$ npx wraptalk init\n\n✅ Creating wraptalk.config.json file\n✅ Installing wraptalk-react package\n✅ Initialization complete\n\nYour WrapTalk project is ready! To generate translations:\n\n1. Wrap your text in <TranslateThis tid="unique_id"> components\n2. Run 'npx wraptalk run' to scan and translate\n3. Import the LanguageProvider in your App.js\n4. Use the useLanguage hook to switch languages`}
                   </div>
                 </div>
                 <div className="mb-6">
@@ -152,7 +152,7 @@ const WrapTalkDocs = () => {
                     The Init Command Internals
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of what the init command does internally\nconst initProject = async () => {\n  // 1. Create config file\n  const configContent = {\n    sourcePath: "./src",\n    outputPath: "./src/wraptalk.translations.json",\n    languages: ["english", "spanish", "french", "bengali", "hindi"],\n    apiKey: "",\n    // Let user configure later\n  };\n\n  fs.writeFileSync(\n    path.join(process.cwd(), "wraptalk.config.json"),\n    JSON.stringify(configContent, null, 2)\n  );\n\n  // 2. Install wraptalk-reactjs package\n  execSync("npm install --save wraptalk-reactjs");\n\n  // 3. Create empty translations file\n  const emptyTranslations = {\n    english: {},\n    spanish: {},\n    french: {},\n    bengali: {},\n    hindi: {}\n  };\n\n  fs.writeFileSync(\n    path.join(process.cwd(), "src/wraptalk.translations.json"),\n    JSON.stringify(emptyTranslations, null, 2)\n  );\n\n  console.log("✅ WrapTalk initialized successfully!");\n};`}</pre>
+                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of what the init command does internally\nconst initProject = async () => {\n  // 1. Create config file\n  const configContent = {\n    sourcePath: "./src",\n    outputPath: "./src/wraptalk.translations.json",\n    languages: ["english", "spanish", "french", "bengali", "hindi"],\n    apiKey: "",\n    // Let user configure later\n  };\n\n  fs.writeFileSync(\n    path.join(process.cwd(), "wraptalk.config.json"),\n    JSON.stringify(configContent, null, 2)\n  );\n\n  // 2. Install wraptalk-react package\n  execSync("npm install --save wraptalk-react");\n\n  // 3. Create empty translations file\n  const emptyTranslations = {\n    english: {},\n    spanish: {},\n    french: {},\n    bengali: {},\n    hindi: {}\n  };\n\n  fs.writeFileSync(\n    path.join(process.cwd(), "src/wraptalk.translations.json"),\n    JSON.stringify(emptyTranslations, null, 2)\n  );\n\n  console.log("✅ WrapTalk initialized successfully!");\n};`}</pre>
                   </div>
                   <p className="text-gray-700">
                     The initialization process creates a `
@@ -196,7 +196,7 @@ const WrapTalkDocs = () => {
                   Using React Components
                 </h3>
                 <p className="mb-4">
-                  The `wraptalk-reactjs` package provides React components and
+                  The `wraptalk-react` package provides React components and
                   hooks to easily integrate translations into your application.
                 </p>
                 <div className="mb-6">
@@ -204,7 +204,7 @@ const WrapTalkDocs = () => {
                     &lt;TranslateThis&gt; Component
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the <TranslateThis> component\nimport React from 'react';\nimport { TranslateThis } from 'wraptalk-reactjs';\n\nconst MyComponent = () => {\n  return (\n    <div>\n      <TranslateThis tid="greeting">Hello, world!</TranslateThis>\n    </div>\n  );\n};`}</pre>
+                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the <TranslateThis> component\nimport React from 'react';\nimport { TranslateThis } from 'wraptalk-react';\n\nconst MyComponent = () => {\n  return (\n    <div>\n      <TranslateThis tid="greeting">Hello, world!</TranslateThis>\n    </div>\n  );\n};`}</pre>
                   </div>
                   <p className="text-gray-700">
                     The `&lt;TranslateThis&gt;` component wraps translatable
@@ -217,7 +217,7 @@ const WrapTalkDocs = () => {
                     LanguageProvider Component
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the LanguageProvider\nimport React from 'react';\nimport { LanguageProvider } from 'wraptalk-reactjs';\n\nconst App = () => {\n  return (\n    <LanguageProvider language="english">\n      {/* Your app content */}\n    </LanguageProvider>\n  );\n};`}</pre>
+                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the LanguageProvider\nimport React from 'react';\nimport { LanguageProvider } from 'wraptalk-react';\n\nconst App = () => {\n  return (\n    <LanguageProvider language="english">\n      {/* Your app content */}\n    </LanguageProvider>\n  );\n};`}</pre>
                   </div>
                   <p className="text-gray-700">
                     The `LanguageProvider` component provides the context for
@@ -230,7 +230,7 @@ const WrapTalkDocs = () => {
                     useLanguage Hook
                   </h4>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the useLanguage hook\nimport React from 'react';\nimport { useLanguage } from 'wraptalk-reactjs';\n\nconst MyComponent = () => {\n  const { language, setLanguage } = useLanguage();\n\n  return (\n    <div>\n      <p>Current Language: {language}</p>\n      <button onClick={() => setLanguage('spanish')}>Switch to Spanish</button>\n    </div>\n  );\n};`}</pre>
+                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using the useLanguage hook\nimport React from 'react';\nimport { useLanguage } from 'wraptalk-react';\n\nconst MyComponent = () => {\n  const { language, setLanguage } = useLanguage();\n\n  return (\n    <div>\n      <p>Current Language: {language}</p>\n      <button onClick={() => setLanguage('spanish')}>Switch to Spanish</button>\n    </div>\n  );\n};`}</pre>
                   </div>
                   <p className="text-gray-700">
                     The `useLanguage` hook allows you to access and update the
@@ -287,7 +287,7 @@ const WrapTalkDocs = () => {
                   <p className="text-gray-700 mb-4">
                     The generated translations are saved in a JSON file
                     (`wraptalk.translations.json`) in your source directory.
-                    This file is then used by the `wraptalk-reactjs` components to
+                    This file is then used by the `wraptalk-react` components to
                     display the correct translations.
                   </p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -318,7 +318,7 @@ const WrapTalkDocs = () => {
                   <p className="text-gray-700 mb-4">
                     Start by initializing WrapTalk in your project using the
                     `wraptalk init` command. This will create the necessary
-                    configuration file and install the `wraptalk-reactjs` package.
+                    configuration file and install the `wraptalk-react` package.
                   </p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <pre className="text-sm overflow-x-auto text-gray-800">{`$ npx wraptalk init`}</pre>
@@ -354,11 +354,11 @@ const WrapTalkDocs = () => {
                     Runtime Usage
                   </h4>
                   <p className="text-gray-700 mb-4">
-                    Use the `wraptalk-reactjs` components to display and switch
+                    Use the `wraptalk-react` components to display and switch
                     between languages dynamically in your application.
                   </p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using wraptalk-reactjs components\n<LanguageProvider language="english">\n  <TranslateThis tid="greeting">Hello, world!</TranslateThis>\n</LanguageProvider>`}</pre>
+                    <pre className="text-sm overflow-x-auto text-gray-800">{`// Example of using wraptalk-react components\n<LanguageProvider language="english">\n  <TranslateThis tid="greeting">Hello, world!</TranslateThis>\n</LanguageProvider>`}</pre>
                   </div>
                 </div>
               </div>
@@ -366,13 +366,6 @@ const WrapTalkDocs = () => {
           )}
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white p-4 mt-auto">
-        <div className="max-w-6xl mx-auto text-center">
-          © 2025 WrapTalk Documentation. All rights reserved.
-        </div>
-      </footer>
     </div>
   );
 };
