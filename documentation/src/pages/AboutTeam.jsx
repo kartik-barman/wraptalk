@@ -8,10 +8,10 @@ export default function AboutTeam() {
       name: "Sree Gopal Saha",
       role: "MERN Stack Developer",
       bio: "Sree Gopal Saha is a passionate MERN Stack developer, embarking on his career in MERN Stack development with great enthusiasm. They founded WrapTalk after experiencing the pain of internationalization in large-scale applications.",
-      image: "https://media.licdn.com/dms/image/v2/D4D03AQGG79xYxGe2uQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1694942905209?e=1749081600&v=beta&t=fc6NKP5anoeaI9B71HvDU6KxXJzZteEUlqTG7e42i3A",
+      image: "https://res.cloudinary.com/dmwlciwjk/image/upload/fl_preserve_transparency/v1743499479/WhatsApp_Image_2025-04-01_at_2.54.08_PM_itlze6.jpg?_s=public-apps",
       social: {
         github: "https://github.com/sreegopalsaha",
-        linkedin: "https://linkedin.com",
+        linkedin: "https://linkedin.com/in/sreegopalsaha",
       },
     },
     {
