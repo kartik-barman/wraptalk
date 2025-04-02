@@ -1,8 +1,9 @@
 import { Github, Linkedin, Twitter } from "lucide-react"
 
-
+import useTitle from "../hooks/useTitle"
 
 export default function AboutTeam() {
+  useTitle("About Our Team - WrapTalk");
   const teamMembers = [
     {
       name: "Sree Gopal Saha",
@@ -37,8 +38,8 @@ export default function AboutTeam() {
     {
       name: "Sushanta Ruidas",
       role: "Backend Developer",
-      bio: "Sushanta Ruidas is a passionate frontend developer, dedicated to crafting engaging and user-friendly web experiences with creativity and precision",
-      image: "https://media.licdn.com/dms/image/v2/D4E03AQHLFceTKA2wuA/profile-displayphoto-shrink_200_200/B4EZXcXd0KHMAY-/0/1743158904646?e=1749081600&v=beta&t=oNypSrTX1WaKTBYmGmCiMsaVRgX36afdLKa4kIt7dXM",
+      bio: "Sushanta Ruidas is a passionate Backend developer, dedicated to crafting engaging and user-friendly web experiences with creativity and precision",
+      image: "https://res.cloudinary.com/dvy8vfosc/image/upload/v1743586147/SushantaIMG_gnmbwo.jpg",
       social: {
         github: "https://github.com/SushantaaCSE",
         linkedin: "https://www.linkedin.com/in/sushanta-ruidas/",

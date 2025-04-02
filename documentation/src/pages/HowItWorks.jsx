@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import useTitle from "../hooks/useTitle";
 
 const WrapTalkDocs = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  useTitle(`WrapTalk - ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`);
+
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 pt-[5rem]">

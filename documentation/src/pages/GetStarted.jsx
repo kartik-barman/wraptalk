@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Copy, Check } from "lucide-react";
+import useTitle from "../hooks/useTitle";
 
 // Copy Button Component
 const CopyButton = ({ text }) => {
@@ -55,6 +56,7 @@ const StepCard = ({ number, title, description, code }) => {
 
 // Main Get Started Page
 const WrapTalkGetStarted = () => {
+  useTitle("Getting Started | Installation Guide"); 
   return (
     <div className="bg-gray-50 min-h-screen pt-16 dark:bg-gray-900 dark:text-white transition-colors">
       {/* Header */}

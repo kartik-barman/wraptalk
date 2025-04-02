@@ -1,6 +1,8 @@
 import { GitBranch, Code, Globe, Zap } from "lucide-react";
+import useTitle from "../hooks/useTitle";
 
 export default function AboutProject() {
+  useTitle("About WrapTalk - multilingual support in React applications")
   return (
     <section
       id="about-project"
