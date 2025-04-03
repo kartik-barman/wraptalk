@@ -12,7 +12,7 @@ export default function LandingPage() {
           <h1 className="text-5xl md:text-6xl font-bold max-w-4xl mx-auto mb-6">
             Seamless Translations with
             <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
-              WrapTalk
+              Wraptalk
             </span>
           </h1>
 
