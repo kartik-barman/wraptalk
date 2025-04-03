@@ -1,4 +1,6 @@
-# WrapTalk ![npm](https://img.shields.io/npm/v/wraptalk)  ![npm downloads](https://img.shields.io/npm/dt/wraptalk)  
+# WrapTalk ![npm](https://img.shields.io/npm/v/wraptalk)  ![npm downloads](https://img.shields.io/npm/dt/wraptalk)
+
+[Visit our Website](https://www.wraptalk.xyz/) | [WrapTalk on npm](https://www.npmjs.com/package/wraptalk)
 
 WrapTalk is a simple and efficient translation package for React applications. It allows developers to wrap text components and manage translations seamlessly using AI-generated translations.
 
@@ -7,7 +9,7 @@ WrapTalk is a simple and efficient translation package for React applications. I
 - AI-generated translations using the Gemini AI.
 - Supports storing and managing translations in JSON files.
 - No external API calls for live translations; works offline after generation.
-- Adjust or customize any translations
+- Adjust or customize any translations.
 
 ## Setup WrapTalk
 Install WrapTalk globally and initialize your project with just two commands.
@@ -41,12 +43,12 @@ Wrap your application with the `LanguageProvider` component in your main entry f
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { LanguageProvider } from 'wraptalk';
-import translations from './wraptalk.translations.json'; // import this 
+import translations from './wraptalk.translations.json'; // import this
 import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <LanguageProvider translations={translations}>  // pass the imported json file here 
+    <LanguageProvider translations={translations}>  // pass the imported json file here
       <App />
     </LanguageProvider>
   </React.StrictMode>,
@@ -167,4 +169,3 @@ Yes, you can manually edit the `wraptalk.translations.json` file if you need to 
 WrapTalk is currently in its prototype version, and we need your feedback! With your support, we can turn this into something big.
 
 This is an open-source project, feel free to contribute, report issues, or suggest improvements. Every bit of help is appreciated!
-
